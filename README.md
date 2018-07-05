@@ -2,3 +2,6 @@
 PHP-DI Client bridge is a bridge for SAREhub PHP Client for php-di library.
 
 ## Installation
+```
+composer require sarehub/client-di-bridge
+```
