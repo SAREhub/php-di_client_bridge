@@ -63,7 +63,7 @@ class PerWorkerMessageConsumerProvider extends InvokableProvider
     {
         return AmqpConsumerOptions::newInstance()
             ->setQueueName($this->queueName)
-            ->setTag(sprintf(self::TAG_PATTERN, $this->workerId));
+            ->setTag(sprintf(self::TAG_PATTERN, $this->tagPrefix, $this->workerId));
     }
 
     /**
