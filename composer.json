@@ -1,5 +1,5 @@
 {
-  "name": "sarehub/php-di_client_bridge",
+  "name": "sarehub/client_di_bridge",
   "description": "PHP-DI Client bridge is a SAREhub PHP Client bridge for php-di library",
   "license": "Apache-2.0",
   "require-dev": {
