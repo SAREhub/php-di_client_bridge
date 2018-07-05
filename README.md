@@ -1,5 +1,5 @@
 # PHP-DI Client bridge
-PHP-DI Client bridge is a bridge for SAREhub PHP Client for php-di library.
+PHP-DI Client bridge is a SAREhub PHP Client bridge for php-di library.
 
 ## Installation
 ```
