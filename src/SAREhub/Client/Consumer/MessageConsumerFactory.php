@@ -16,13 +16,8 @@ class MessageConsumerFactory
             ->parameter("processor", $processor);
     }
 
-    public static function create(
-        string $queueName,
-        int $workerId,
-        string $tagPattern,
-        $processor
-    ): FactoryDefinitionHelper {
-
+    public static function create($queueName, $workerId, $tagPattern, $processor): FactoryDefinitionHelper
+    {
         $options = (new AmqpConsumerOptions())->setQueueName($queueName)->setTag(sprintf($tagPattern, $workerId));
 
         return factory(MessageConsumerProvider::class)
