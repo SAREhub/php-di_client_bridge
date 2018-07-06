@@ -9,7 +9,7 @@ use function DI\factory;
 
 class MessageConsumerFactory
 {
-    public static function createExclusive(string $queueName, $processor): FactoryDefinitionHelper
+    public static function createExclusive($queueName, $processor): FactoryDefinitionHelper
     {
         return factory(MessageConsumerProvider::class)
             ->parameter("consumerOptions", (new AmqpConsumerOptions())->setQueueName($queueName))
