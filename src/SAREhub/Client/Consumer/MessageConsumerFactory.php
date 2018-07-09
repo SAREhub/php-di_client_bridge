@@ -14,16 +14,16 @@ class MessageConsumerFactory
     public static function createExclusive($queueName, $processor): CreateDefinitionHelper
     {
         return create(AmqpConsumer::class)
-            ->constructor([
+            ->constructor(
                 (new AmqpConsumerOptions())->setQueueName($queueName),
                 $processor
-            ]);
+            );
     }
 
     public static function create($queueName, $workerId, $tagPattern, $processor): CreateDefinitionHelper
     {
         $options = (new AmqpConsumerOptions())->setQueueName($queueName)->setTag(sprintf($tagPattern, $workerId));
 
-        return create(AmqpConsumer::class)->constructor([$options, $processor]);
+        return create(AmqpConsumer::class)->constructor($options, $processor);
     }
 }
