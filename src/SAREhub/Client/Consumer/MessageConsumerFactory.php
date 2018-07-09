@@ -5,8 +5,9 @@ namespace SAREhub\Client\Consumer;
 
 
 use DI\Definition\Helper\FactoryDefinitionHelper;
-use SAREhub\Client\Consumer\AmqpConsumerOptions;
 use function DI\factory;
+use SAREhub\Client\Amqp\AmqpConsumerOptions;
+use SAREhub\Client\Amqp\MessageConsumerProvider;
 
 class MessageConsumerFactory
 {
