@@ -4,26 +4,26 @@
 namespace SAREhub\Client\Consumer;
 
 
-use DI\Definition\Helper\FactoryDefinitionHelper;
-use function DI\factory;
+use function DI\create;
+use DI\Definition\Helper\CreateDefinitionHelper;
+use SAREhub\Client\Amqp\AmqpConsumer;
 use SAREhub\Client\Amqp\AmqpConsumerOptions;
-use SAREhub\Client\Amqp\MessageConsumerProvider;
 
 class MessageConsumerFactory
 {
-    public static function createExclusive($queueName, $processor): FactoryDefinitionHelper
+    public static function createExclusive($queueName, $processor): CreateDefinitionHelper
     {
-        return factory(MessageConsumerProvider::class)
-            ->parameter("consumerOptions", (new AmqpConsumerOptions())->setQueueName($queueName))
-            ->parameter("processor", $processor);
+        return create(AmqpConsumer::class)
+            ->constructor([
+                (new AmqpConsumerOptions())->setQueueName($queueName),
+                $processor
+            ]);
     }
 
-    public static function create($queueName, $workerId, $tagPattern, $processor): FactoryDefinitionHelper
+    public static function create($queueName, $workerId, $tagPattern, $processor): CreateDefinitionHelper
     {
         $options = (new AmqpConsumerOptions())->setQueueName($queueName)->setTag(sprintf($tagPattern, $workerId));
 
-        return factory(MessageConsumerProvider::class)
-            ->parameter("consumerOptions", $options)
-            ->parameter("processor", $processor);
+        return create(AmqpConsumer::class)->constructor([$options, $processor]);
     }
 }
