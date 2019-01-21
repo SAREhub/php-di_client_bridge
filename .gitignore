@@ -1,4 +1,4 @@
 .idea/
 vendor/
 /.gtm/
-composer.lcok
+composer.lock
