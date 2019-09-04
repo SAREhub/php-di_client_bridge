@@ -15,7 +15,7 @@
     "sarehub/commons": "0.7.*",
     "sarehub/client": "0.7.*",
     "php-di/php-di": "^6.0",
-    "sarehub/dockerutil": "0.3.*",
+    "sarehub/dockerutil": "0.3.*"
   },
 
   "suggest": {
