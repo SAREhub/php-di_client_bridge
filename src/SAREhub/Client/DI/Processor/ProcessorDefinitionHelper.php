@@ -1,12 +1,22 @@
 <?php
-namespace SAREhub\Client\Processor;
+namespace SAREhub\Client\DI\Processor;
 
 use DI\Definition\Helper\CreateDefinitionHelper;
+use SAREhub\Client\Processor\HeaderAppenderProcessor;
+use SAREhub\Client\Processor\LogProcessor;
+use SAREhub\Client\Processor\MarshalProcessor;
+use SAREhub\Client\Processor\MulticastProcessor;
+use SAREhub\Client\Processor\NullProcessor;
+use SAREhub\Client\Processor\Pipeline;
+use SAREhub\Client\Processor\Router;
+use SAREhub\Client\Processor\SimpleFilterProcessor;
+use SAREhub\Client\Processor\TransformProcessor;
+use SAREhub\Client\Processor\UnmarshalProcessor;
 use function DI\create;
 
 class ProcessorDefinitionHelper
 {
-    public static function filter(callable $predicate, $to)
+    public static function filter(callable $predicate, $to): CreateDefinitionHelper
     {
         return create(SimpleFilterProcessor::class)
             ->constructor(self::closureValue($predicate))->method("to", $to);

@@ -4,12 +4,22 @@
   "license": "Apache-2.0",
   "require-dev": {
     "phpunit/phpunit": "6.*",
-    "mockery/mockery": "1.*"
+    "mockery/mockery": "1.*",
+    "sarehub/easyeca": "0.6.*"
   },
   "require": {
     "php": "^7.1",
+    "ext-json": "*",
+    "monolog/monolog": "1.*",
+    "respect/validation": "1.*",
+    "sarehub/commons": "0.7.*",
     "sarehub/client": "0.7.*",
-    "php-di/php-di": "^6.0"
+    "php-di/php-di": "^6.0",
+    "sarehub/dockerutil": "0.3.*",
+  },
+
+  "suggest": {
+    "sarehub/easyeca": "When use ECA rules"
   },
   "autoload": {
     "psr-4": {
