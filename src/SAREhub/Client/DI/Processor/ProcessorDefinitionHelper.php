@@ -16,10 +16,11 @@ use function DI\create;
 
 class ProcessorDefinitionHelper
 {
-    public static function filter(callable $predicate, $to): CreateDefinitionHelper
+    public static function filter($predicate, $to): CreateDefinitionHelper
     {
+        $predicate = is_callable($predicate) ? self::closureValue($predicate) : $predicate;
         return create(SimpleFilterProcessor::class)
-            ->constructor(self::closureValue($predicate))->method("to", $to);
+            ->constructor($predicate)->method("to", $to);
     }
 
     public static function unmarshal($dataFormat): CreateDefinitionHelper
