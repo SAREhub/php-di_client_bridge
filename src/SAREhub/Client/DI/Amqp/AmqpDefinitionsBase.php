@@ -17,6 +17,7 @@ use SAREhub\Client\DI\Processor\ProcessorDefinitionHelper;
 use SAREhub\Client\Event\Event;
 use SAREhub\Client\Event\RawEventDataFormat;
 use SAREhub\Client\Message\Exchange;
+use SAREhub\Commons\Logger\BasicLoggingDefinitions;
 use SAREhub\Commons\Logger\LoggerFactory;
 use function DI\autowire;
 use function DI\create;
@@ -73,8 +74,8 @@ abstract class AmqpDefinitionsBase
 
     protected static function connectionServiceDef()
     {
-        return autowire(AmqpConnectionService::class)
-            ->method("setLogger", factory(LoggerFactory::class . "::create")
-                ->parameter("name", "Amqp.ConnectionService"));
+        $def = autowire(AmqpConnectionService::class)
+            ->method("addChannel", get(AmqpChannelWrapper::class));
+        return BasicLoggingDefinitions::inject($def, "Amqp.ConnectionService");
     }
 }
