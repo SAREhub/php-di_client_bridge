@@ -74,8 +74,6 @@ abstract class AmqpDefinitionsBase
 
     protected static function connectionServiceDef()
     {
-        $def = autowire(AmqpConnectionService::class)
-            ->method("addChannel", get(AmqpChannelWrapper::class));
-        return BasicLoggingDefinitions::inject($def, "Amqp.ConnectionService");
+        return BasicLoggingDefinitions::inject(autowire(AmqpConnectionService::class), "Amqp.ConnectionService");
     }
 }
