@@ -56,17 +56,37 @@ abstract class AmqpDefinitionsBase
 
     protected static function messageSenderDef()
     {
-        return ProcessorDefinitionHelper::pipeline([
-            ProcessorDefinitionHelper::headerAppender([
-                AmqpMessageHeaders::EXCHANGE => static::getMessageSenderExchange(),
-            ]),
-            ProcessorDefinitionHelper::filter(function (Exchange $exchange) {
-                return $exchange->getIn()->getBody() instanceof Event;
-            }, ProcessorDefinitionHelper::pipeline([
-                ProcessorDefinitionHelper::marshal(get(RawEventDataFormat::class)),
-                ProcessorDefinitionHelper::marshal(get(JsonDataFormat::class))
-            ])),
+        return ProcessorDefinitionHelper::filter(function (Exchange $exchange) {
+            return !empty($exchange->getInBody());
+        }, ProcessorDefinitionHelper::pipeline([
+            self::appendMessageSenderExchangeHeaderDef(),
+            self::bodyAsEventFilterDef(),
+            self::bodyAsArrayOrJsonSerializableFilterDef(),
             get(AmqpProducer::class)
+        ]));
+
+    }
+
+    private static function bodyAsEventFilterDef()
+    {
+        return ProcessorDefinitionHelper::filter(function (Exchange $exchange) {
+            return $exchange->getIn()->getBody() instanceof Event;
+        }, ProcessorDefinitionHelper::pipeline([
+            ProcessorDefinitionHelper::marshal(get(RawEventDataFormat::class))
+        ]));
+    }
+
+    private static function bodyAsArrayOrJsonSerializableFilterDef()
+    {
+        return ProcessorDefinitionHelper::filter(function (Exchange $exchange) {
+            return is_array($exchange->getInBody()) || $exchange->getInBody() instanceof \JsonSerializable;
+        }, ProcessorDefinitionHelper::marshal(get(JsonDataFormat::class)));
+    }
+
+    protected static function appendMessageSenderExchangeHeaderDef()
+    {
+        return ProcessorDefinitionHelper::headerAppender([
+            AmqpMessageHeaders::EXCHANGE => static::getMessageSenderExchange(),
         ]);
     }
 
